@@ -74,8 +74,12 @@ class JSONWebTokenLoginHandler(BaseHandler):
             opts = {"verify_aud": False}
         else:
             opts = {}
+            
+        decoded_token = jwt.decode(json_web_token, secret, algorithms=list(jwt.ALGORITHMS.SUPPORTED), audience=audience, options=opts)
+            
+        print(decoded_token)
         
-        return jwt.decode(json_web_token, secret, algorithms=list(jwt.ALGORITHMS.SUPPORTED), audience=audience, options=opts)
+        return decoded_token
 
     @staticmethod
     def retrieve_username(claims, username_claim_field):
